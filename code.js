@@ -1,8 +1,13 @@
-console.log('hi');
+
 const container = document.querySelector('.container');
 let rows = 16;
+let mouseDown = false;
+
+document.body.onmousedown = () => {(mouseDown = true); console.log(mouseDown)};
+document.body.onmouseup = () => {(mouseDown = false); console.log(mouseDown)}
+
 createCamva(rows);
-paint();
+paint('red');
 
 function createCamva(pixels) {
     for (let i = 1; i <= pixels; i++) {
@@ -35,17 +40,60 @@ btn.addEventListener('click', () => {
             alert("Please choose a range between 1-100!!!!");
         } 
     createCamva(canvaSize);
-    paint();
+    paint('red');
 })
 
+const randomBtn = document.querySelector('.random');
 
-function paint() {
+randomBtn.addEventListener('click', () => {
+    randomPaint();
+})
+
+function paint(color) {
+    const pixels = document.querySelectorAll('.pixel');
+
+    pixels.forEach((pixel) => {
+        pixel.addEventListener('mouseover', (e) => {
+            console.log(e.type);
+            if (e.type === 'mouseover' && mouseDown === true) {
+                console.log(e.type);
+                pixel.style.backgroundColor = color;
+            }
+        })
+        pixel.addEventListener('mousedown', () => {
+                pixel.style.backgroundColor = color;
+        })
+    })
+}
+
+function randomPaint() {
     const pixels = document.querySelectorAll('.pixel');
 
     pixels.forEach((pixel) => {
         pixel.addEventListener('mouseover', () => {
-            pixel.style.backgroundColor = 'red';
+            pixel.style.backgroundColor = randomColor();
             console.log('hover');
         })
     })
+}
+
+const reset = document.querySelector('.reset');
+reset.addEventListener('click', () => {
+    const pixels = document.querySelectorAll('.pixel');
+    pixels.forEach((pixel) => {
+        pixel.style.backgroundColor = "white";
+    })
+    paint('red');
+})
+
+function randomNum() {
+    return Math.floor(Math.random() * 256); 
+}
+
+function randomColor() {
+    let r = randomNum();
+    let g = randomNum();
+    let b = randomNum();
+
+    return `rgb(${r},${g},${b})`
 }
