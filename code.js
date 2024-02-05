@@ -3,8 +3,17 @@ const container = document.querySelector('.container');
 let rows = 16;
 let mouseDown = false;
 
-document.body.onmousedown = () => {(mouseDown = true); console.log(mouseDown)};
-document.body.onmouseup = () => {(mouseDown = false); console.log(mouseDown)}
+document.body.onmousedown = () => (mouseDown = true);
+document.body.onmouseup = () => (mouseDown = false);
+
+document.body.addEventListener('dragstart', event => {
+    event.preventDefault();
+  });
+  
+document.body.addEventListener('drop', event => {
+    event.preventDefault();
+});
+
 
 createCamva(rows);
 paint('red');
