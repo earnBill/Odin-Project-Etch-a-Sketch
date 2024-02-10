@@ -4,9 +4,11 @@ const resetBtn = document.querySelector('.resetBtn');
 const createBtn = document.querySelector('.createBtn');
 const randomBtn = document.querySelector('.randomBtn');
 const eraserBtn = document.querySelector('.eraserBtn');
+const colorPicker = document.querySelector('#colorpicker');
 
 
-let color = 'red';
+let color = colorPicker.value;
+console.log(colorPicker);
 let rows = 16;
 let mouseDown = false;
 
@@ -111,6 +113,14 @@ resetBtn.addEventListener('click', () => {
     eraser = false;
     startColor = true;
 })
+
+colorPicker.addEventListener('input', () => {
+    startColor = true;
+    color = colorPicker.value;
+    console.log(color)
+})
+
+
 
 function randomNum() {
     return Math.floor(Math.random() * 256); 
